@@ -1,0 +1,54 @@
+[submodule "vimfiles/bundle/AnsiEsc.vim"]
+	path = vimfiles/bundle/AnsiEsc.vim
+	url = https://github.com/vim-scripts/AnsiEsc.vim.git
+[submodule "vimfiles/bundle/ctrip.vim"]
+	path = vimfiles/bundle/ctrip.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "vimfiles/bundle/indentLine"]
+	path = vimfiles/bundle/indentLine
+	url = https://github.com/Yggdroot/indentLine.git
+[submodule "vimfiles/bundle/neobundle.vim"]
+	path = vimfiles/bundle/neobundle.vim
+	url = https://github.com/Shougo/neobundle.vim.git
+[submodule "vimfiles/bundle/neomru.vim"]
+	path = vimfiles/bundle/neomru.vim
+	url = https://github.com/Shougo/neomru.vim.git
+[submodule "vimfiles/bundle/neosnippet-snippets"]
+	path = vimfiles/bundle/neosnippet-snippets
+	url = https://github.com/Shougo/neosnippet-snippets.git
+[submodule "vimfiles/bundle/neosnippet.vim"]
+	path = vimfiles/bundle/neosnippet.vim
+	url = https://github.com/Shougo/neosnippet.vim.git
+[submodule "vimfiles/bundle/nerdtree"]
+	path = vimfiles/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vimfiles/bundle/syntastic"]
+	path = vimfiles/bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "vimfiles/bundle/tcomment_vim"]
+	path = vimfiles/bundle/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim.git
+[submodule "vimfiles/bundle/unite.vim"]
+	path = vimfiles/bundle/unite.vim
+	url = https://github.com/Shougo/unite.vim.git
+[submodule "vimfiles/bundle/vim-colorschemes"]
+	path = vimfiles/bundle/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "vimfiles/bundle/vim-endwise"]
+	path = vimfiles/bundle/vim-endwise
+	url = https://github.com/tpope/vim-endwise.git
+[submodule "vimfiles/bundle/vim-fugitive"]
+	path = vimfiles/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vimfiles/bundle/indent-guides"]
+	path = vimfiles/bundle/indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "vimfiles/bundle/vim-rails"]
+	path = vimfiles/bundle/vim-rails
+	url = https://github.com/tpope/vim-rails.git
+[submodule "vimfiles/bundle/vimshell_3787e5"]
+	path = vimfiles/bundle/vimshell_3787e5
+	url = https://github.com/Shougo/vimshell.vim.git
+[submodule "vimfiles/bundle/wandbox-vim"]
+	path = vimfiles/bundle/wandbox-vim
+	url = https://github.com/rhysd/wandbox-vim.git
