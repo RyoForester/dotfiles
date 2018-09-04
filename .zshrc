@@ -1,38 +1,56 @@
-# tmux自動起動できるやーつ
-#[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux
+########################################
+# zsh 起動時、tmux を自動起動
+########################################
+[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux
 
 ########################################
 # 環境変数
+########################################
+# 文字コード
 export LANG=ja_JP.UTF-8
 
-# pyenv
-export PATH=$HOME/.pyenv/bin:$PATH
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# rbenv(URL：http://h2ham.net/ruby-rbenv)
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-
-# jenv(URL: http://takmnagaya.hatenablog.com/entry/2017/01/08/141624)
-export PATH=$HOME/.jenv/bin:$PATH
-eval "$(jenv init -)"
-
 # git
-export PATH=/usr/local/Cellar/git/2.16.1/bin:$PATH
+export PATH="/usr/local/Cellar/git/2.18.0/bin:$PATH"
 
-# java
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+# anyenv
+if [ -d $HOME/.anyenv ] ; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+    # tmux対応
+    for D in `ls $HOME/.anyenv/envs`
+    do
+        export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+    done
+fi
+
+export TERM=xterm-256color
+
 ########################################
-# 色を使用出来るようにする
+# カラー
+########################################
 autoload -Uz colors
 colors
 
-# node.js
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+case ${OSTYPE} in
+    darwin*)
+        #Mac用の設定
+        export CLICOLOR=1
+        alias ls='ls -G -F'
+        ;;
+    linux*)
+        #Linux用の設定
+        #alias ls='ls -F --color=auto'
+        ;;
+esac
 
-# vim 風キーバインドにする
+
+########################################
+# キーバインドの設定（vim風）
+########################################
 bindkey -v
+
+# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
+bindkey '^R' history-incremental-pattern-search-backward
 
 bindkey "^A" beginning-of-line
 bindkey "^B" backward-char
@@ -44,8 +62,13 @@ bindkey "^L" clear-screen
 bindkey "^N" history-beginning-search-forward
 bindkey "^P" history-beginning-search-backward
 bindkey "^Y" yank
-#他は: http://mollifier.hatenablog.com/entry/20081213/1229148947
+# その他は以下参照のこと
+# http://mollifier.hatenablog.com/entry/20081213/1229148947
 
+
+########################################
+# オプション
+########################################
 # ヒストリの設定
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -53,12 +76,10 @@ SAVEHIST=1000000
 
 # プロンプト
 # 1行表示
-# PROMPT="%~ %# "
 PROMPT="$ "
 # 2行表示
 # PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
 # %# "
-
 
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
@@ -70,6 +91,7 @@ zstyle ':zle:*' word-style unspecified
 
 ########################################
 # 補完
+########################################
 # 補完機能を有効にする
 autoload -Uz compinit
 compinit
@@ -89,6 +111,7 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
 ########################################
 # vcs_info
+########################################
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 
@@ -104,6 +127,7 @@ add-zsh-hook precmd _update_vcs_info_msg
 
 ########################################
 # オプション
+########################################
 # 日本語ファイル名を表示可能にする
 setopt print_eight_bit
 
@@ -142,53 +166,10 @@ setopt hist_reduce_blanks
 # 高機能なワイルドカード展開を使用する
 setopt extended_glob
 
-########################################
-# キーバインド
-
-# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
-bindkey '^R' history-incremental-pattern-search-backward
 
 ########################################
-# エイリアス
-alias vi="vim"
-alias la='ls -a'
-alias ll='ls -l'
-
-#alias rm='rm -i'
-#alias cp='cp -i'
-#alias mv='mv -i'
-
-alias vm="cd ~/dev/vagrant/ubuntu-16.04"
-alias vh="vagrant halt"
-alias vr="vagrant reload"
-alias vu="vagrant up"
-alias vs="vagrant ssh"
-alias vsx="ssh -X vagrant"
-
-alias gb='git branch'
-alias gc='git checkout'
-alias gcb='git checkout -b'
-alias gs='git status'
-alias gcm='git checkout master'
-alias gpom='git pull origin master'
-alias gmm='git merge master'
-
-# SSH
-alias ksu="ssh -D 1080 i1788250@cc2000.kyoto-su.ac.jp"
-alias seeds='ssh -i ~/.ssh/seeds.key root@192.168.100.11'
-
-alias mkdir='mkdir -p'
-alias camera='sudo killall VDCAssistant'
-
-# sudo の後のコマンドでエイリアスを有効にする
-alias sudo='sudo '
-
-# グローバルエイリアス
-alias -g L='| less'
-alias -g G='| grep'
-
 # C で標準出力をクリップボードにコピーする
-# mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
+########################################
 if which pbcopy >/dev/null 2>&1 ; then
     # Mac
     alias -g C='| pbcopy'
@@ -199,30 +180,46 @@ if which pbcopy >/dev/null 2>&1 ; then
     # Cygwin
     #alias -g C='| putclip'
 fi
-
+# http://mollifier.hatenablog.com/entry/20100317/p1
 
 
 ########################################
-# OS 別の設定
-case ${OSTYPE} in
-    darwin*)
-        #Mac用の設定
-        export CLICOLOR=1
-        alias ls='ls -G -F'
-        ;;
-    linux*)
-        #Linux用の設定
-        #alias ls='ls -F --color=auto'
-        ;;
-esac
+# alias
+########################################
+alias vi="vim"
+alias l ='ls'
+alias ll='ls -al'
+alias la='ls -a'
+alias mkdir='mkdir -p'
 
-# vim:set ft=zsh:
+# vagrant
+alias vm="cd ~/dev/vagrant/ubuntu-16.04"
+alias vh="vagrant halt"
+alias vr="vagrant reload"
+alias vu="vagrant up"
+alias vs="vagrant ssh"
+alias vsx="ssh -X vagrant"
 
-# The next line updates PATH for the Google Cloud SDK.
-#if [ -f '/Users/ryosuke/Desktop/seeds/bigquery/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/ryosuke/Desktop/seeds/bigquery/google-cloud-sdk/path.zsh.inc'; fi
+# git
+alias gb='git branch'
+alias gc='git checkout'
+alias gcb='git checkout -b'
+alias gs='git status'
+alias gcm='git checkout master'
+alias gpom='git pull origin master'
+alias gmm='git merge master'
 
-# The next line enables shell command completion for gcloud.
-#if [ -f '/Users/ryosuke/Desktop/seeds/bigquery/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ryosuke/Desktop/seeds/bigquery/google-cloud-sdk/completion.zsh.inc'; fi
-#export PATH="/usr/local/opt/gettext/bin:$PATH"
-#export GOOGLE_APPLICATION_CREDENTIALS="/Users/ryosuke/Desktop/seeds/bigquery/wp_auth.json"
+# sudo の後のコマンドでエイリアスを有効にする
+alias sudo='sudo '
 
+# Ruby bundle exec
+alias be='bundle exec'
+
+# カメラ直す
+alias camera='sudo killall VDCAssistant'
+
+# グローバルエイリアス
+alias -g L='| less'
+alias -g G='| grep'
+
+# SSH
