@@ -12,6 +12,8 @@ export LANG=ja_JP.UTF-8
 # git
 export PATH="/usr/local/Cellar/git/2.18.0/bin:$PATH"
 
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+
 # anyenv
 if [ -d $HOME/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"
@@ -23,7 +25,21 @@ if [ -d $HOME/.anyenv ] ; then
     done
 fi
 
+# tmux 利用時に vim等の色をおかしくさせないため
 export TERM=xterm-256color
+
+# Python3
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
+
+# about zlib
+#export CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
+# about readline
+#export CFLAGS="-I$(brew --prefix readline)/include $CFLAGS"
+#export LDFLAGS="-L$(brew --prefix readline)/lib $LDFLAGS"
+# about openssl
+#export PATH="/usr/local/opt/openssl/bin:$PATH"
+#export CFLAGS="-I$(brew --prefix openssl)/include $CFLAGS"
+#export LDFLAGS="-L$(brew --prefix openssl)/lib $LDFLAGS"
 
 ########################################
 # カラー
